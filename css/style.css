@@ -578,6 +578,10 @@ body {
     margin-bottom: 10px;
 }
 
+.content > .container > .small-title sup {
+    font-size: 14px;
+}
+
 .content > .list .list-item a {
     color: #000000;
     text-decoration: none;
