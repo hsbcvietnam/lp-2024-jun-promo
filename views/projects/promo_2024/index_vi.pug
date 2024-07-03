@@ -1,0 +1,385 @@
+extends layout
+
+block variables
+  -
+    var title = "Mở Thẻ Tín Dụng HSBC nhận quà tặng đến 3,7 triệu VND";
+    //- MAKE SURE THE CORRECT LANGUAGE IS SELECTED, it either english or vietnamese
+    var language = "vietnamese";
+    campaignId = campaignId ? '&CampaignID=' + campaignId : "";
+    leap = leap ? '&leap=' + leap: "&leap=true";
+
+block blockMeta
+  meta(name='description' content='Mở ngay Thẻ Tín Dụng HSBC nhận quà tặng đến 3,7 triệu đồng, hoàn tiền tự động đến 8%/ tháng cho mỗi chi tiêu, trả góp 0% lãi suất và 0% phí chuyển đổi, và hàng trăm ưu đãi giảm giá quanh năm!')
+  link(rel='icon', type='image/png', href!= imageFolder + '/favicon-32x32.png', sizes='32x32')
+  meta(property='og:title' content='Mở Thẻ Tín Dụng HSBC nhận quà tặng đến 3,7 triệu VND')
+  meta(property='og:type' content='website')
+  meta(property='og:url' content='https://card.apply.hsbc.com.vn/uu-dai-mo-the-tin-dung-HSBC/vn')
+  meta(property='og:image', content!= 'https://card.apply.hsbc.com.vn' + imageFolder + '/thumbnail.jpg')
+
+block blockCSS
+  link(rel="stylesheet", href!= cssFolder + "/chs_custom.css")
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  link(rel='canonical', href='https://card.apply.hsbc.com.vn/promotion-apply-credit-card-hsbc/en')
+
+block blockJS
+  script(src!= jsFolder + '/chs_custom.js')
+
+  script(type='text/javascript').
+    if (document.URL.indexOf("pid=") != -1 || document.URL.indexOf("cid=") != -1) {
+      jQuery("a[href*=' /1/2/vnm2/lead/card/the-tin-dung-hsbc-credit-card']")
+        .map(function() {
+          $(this).attr("href", $(this).attr("href").split("?")[0] + "?" + document.URL.match(/[^&?]*?=[^&?]*/)[0])
+        });
+    };
+
+block blockTealiumHead
+  //- Start - Tealium iQ (sync.js)
+  script(src='//tags.tiqcdn.com/utag/hsbc/vn-rbwm/prod/utag.sync.js')
+  //- End - Tealium iQ (sync.js)
+
+block blockTealium
+  script.
+    // Universal Data Object
+    //- PLEASE REFER THE example.pdf FOR UDO VALUE.
+    window.utag_data = {
+      "page_url"            : location.protocol + '//' + document.domain + location.pathname + location.hash,
+      "page_name"           : location.pathname.replace(/\/(en|vn)/g, "").replace(/(https|http):\/\//, "").replace(/^/, "pws").replace(/\//g, ":").replace(/:$/, "").replace(/-/g, " "),
+      "page_language"       : pageOption.language == "vietnamese" ? "vn_vi" : "en",
+      "page_type"           : "campaign",
+      "page_security_level" : "0",
+      "page_business_line"  : "rbwm",
+      "page_customer_group" : "general",
+      "site_section"        : "pws",
+      "product_category"    : "credit cards",
+      "product_subcategory" : "primary cards",
+      "product_id": "visa-classic, visa-platinum, visa-cash-back"
+    };
+    window.utag_data.page_category = window.utag_data.page_name.split(":")[1];
+    window.utag_data.page_subcategory = window.utag_data.page_name.split(":")[2];
+    //- Loading Tealium
+    (function(a,b,c,d,e){
+      // Change the 'production.domain.com' into the acutal application production domain.
+      b=document;e=b.domain==('card.apply.hsbc.com.vn')?'prod':'qa';
+      a='//tags.tiqcdn.com/utag/hsbc/vn-rbwm/' + e + '/utag.js';
+      c='script';d=b.createElement(c);d.src=a;
+      d.type='text/java'+c;d.async=true;
+      a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a)
+    })();
+
+block content
+  .header
+    .logo
+    .lang
+      if mgm
+        a(href="/card-promotion-mgm/en", rel="noopener noreferrer") EN
+      else
+        a(href="/promotion-apply-credit-card-HSBC/en", rel="noopener noreferrer") EN
+
+    #header-menu.header-menu
+      .header-item Chọn Thẻ&nbsp;&nbsp;
+        i#close.fa &#xf107;
+        i#open.fa &#xf106;
+      .header-item(title="card-liveplus") Thẻ Live#[sup +]
+      .header-item(title="card-cashback") Thẻ Bạch Kim Cashback
+      if !mgm
+        .header-item(title="card-livefree") Thẻ Chuẩn LiveFree
+      .header-item(title="card-travel") Thẻ TravelOne
+      
+  if mgm
+    .message-wrapper
+      .message-box
+        img.message-box__corner.message-box__corner--top(src!= imageFolder + '/chs_triangle_top.png')
+        img.message-box__corner.message-box__corner--bottom(src!= imageFolder + '/chs_triangle_bottom.png')
+        p.message-box__text
+          | Xin chào Quý khách,
+          br
+          | Bạn của Quý khách đã giới thiệu Quý khách đăng ký mở Thẻ Tín Dụng HSBC.
+          br
+          | Hiện nay, HSBC có rất nhiều ưu đãi hấp dẫn dành cho khách hàng mở Thẻ Tín Dụng mới. Hãy lựa chọn loại Thẻ phù hợp nhất và mở Thẻ ngay hôm nay!
+  else
+    .kv-area
+      .text-box
+        h1.title Thêm hoàn tiền, thêm tận hưởng!
+        .text
+          | #[strong Thẻ Tín Dụng HSBC Live]#[sup +]
+          br
+          | Hoàn tiền đến 8% khi chi tiêu trực tuyến và tại cửa hàng cho ẩm thực, mua sắm và giải trí#[sup (*)]
+
+  .content
+    h2.section-title Chọn và đăng ký Thẻ Tín Dụng HSBC phù hợp nhất với bạn
+    .gray-container
+      #card-liveplus.white-box
+        .only-mobile
+          .title Phù hợp cho ẩm thực, mua sắm và giải trí
+          h3.description Thẻ Tín Dụng HSBC Live#[sup +]
+          .img-container
+            .card-img.card-liveplus
+            a(href!=rocket.host + rocket.offer_vn + "?PdC=VPC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+              .button Mở Thẻ Ngay
+        .card-img.card-liveplus.only-desktop
+        .mid-right-container
+          .title.only-desktop Phù hợp cho ẩm thực, mua sắm và giải trí
+          h3.description.only-desktop Thẻ Tín Dụng HSBC Live#[sup +]
+          .inner-container
+            .middle-col
+              .small-title Tính năng nổi bật
+              ul.list
+                li.list-item Giảm giá từ 15% tại hơn 200 nhà hàng khu vực Châu Á trong chương trình Ẩm Thực Live#[sup +]
+                li.list-item Hoàn tiền đến 8% cho chi tiêu ăn uống và mua sắm (tối đa 200.000 VND/ tháng)
+                li.list-item Hoàn không giới hạn 1% cho chi tiêu giải trí
+                li.list-item Hoàn không giới hạn 0,3% tất cả chi tiêu khác
+                li.list-item Trả góp 0% lãi suất
+                li.list-item Miễn lãi đến 55 ngày
+                li.list-item Hạn mức đến 1 tỷ VND
+                li.list-item Phí phát hành (năm đầu): 800.000 VND
+                li.list-item Phí thường niên (từ năm thứ 2): 800.000 VND
+              a.only-desktop(href!=rocket.host + rocket.offer_vn + "?PdC=VPC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Mở Thẻ Ngay
+            .right-col
+              .title Ưu đãi mở thẻ
+              .list-item.no-bottom-space
+                | #[strong Miễn phí] phát hành #[strong 800.000 VND] cho thẻ chính; và
+              .list-item.no-bottom-space
+                | #[strong Hoàn đến 2.000.000 VND] khi thỏa điều kiện chi tiêu#[sup (*)]; và
+              .list-item
+                | #[strong Hoàn thêm 200.000 VND] khi tải và bật tính năng nhận Thông Báo trên Ứng Dụng HSBC Việt Nam
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/platinum/offers/signup-offer-terms-and-conditions.pdf", target="_blank", rel="noopener noreferrer")
+                | #[sup (*)] Điều khoản và điều kiện áp dụng
+                .arrow
+              .to-content
+                | Điều kiện mở thẻ tín dụng HSBC
+                .arrow
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/online-application-guide-vn.pdf", target="_blank", rel="noopener noreferrer")
+                | Cách thức mở thẻ trực tuyến
+                .arrow
+              a(href="https://www.hsbc.com.vn/credit-cards/products/liveplus", target="_blank", rel="noopener noreferrer")
+                | Đầy đủ thông tin về Thẻ HSBC 
+                span(style="display: inline-block; font-size: 1em;")
+                  | Live#[sup +]
+                  .arrow
+      
+      #card-cashback.white-box
+        .only-mobile
+          .title Phù hợp cho mua sắm tại siêu thị
+          h3.description Thẻ Tín Dụng HSBC Visa Bạch Kim Cash Back
+          .img-container
+            .card-img.card-cashback
+            a(href!=rocket.host + rocket.offer_vn + "?PdC=CVG" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+              .button Mở Thẻ Ngay
+        .card-img.card-cashback.only-desktop
+        .mid-right-container
+          .title.only-desktop Phù hợp cho mua sắm tại siêu thị
+          h3.description.only-desktop Thẻ Tín Dụng HSBC Visa Bạch Kim Cash Back
+          .inner-container
+            .middle-col
+              .small-title Tính năng nổi bật
+              ul.list
+                li.list-item Hoàn tiền đến 8%/tháng cho chi tiêu tại siêu thị và cửa hàng bách hóa
+                li.list-item Hoàn tiền 1%/tháng không giới hạn cho thanh toán học phí và phí bảo hiểm
+                li.list-item Hoàn tiền 0,3%/tháng không giới hạn cho mọi chi tiêu khác
+                li.list-item Trả góp 0% lãi suất
+                li.list-item Miễn lãi đến 55 ngày
+                li.list-item Hạn mức đến 1 tỷ VND
+                li.list-item Phí phát hành (năm đầu): 800.000 VND
+                li.list-item Phí thường niên (từ năm thứ 2): 800.000 VND
+              a.only-desktop(href!=rocket.host + rocket.offer_vn + "?PdC=CVG" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Mở Thẻ Ngay
+            .right-col
+              .title Ưu đãi mở thẻ
+              .list-item.no-bottom-space
+                | #[strong Miễn phí] phát hành #[strong 800.000 VND] cho thẻ chính; và,
+              .list-item.no-bottom-space
+                | #[strong Hoàn 1.000.000 VND] khi thỏa điều kiện chi tiêu#[sup (*)]; và,
+              .list-item
+                | #[strong Hoàn thêm 200.000 VND] khi tải và bật tính năng nhận Thông Báo trên Ứng Dụng HSBC Việt Nam
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/platinum/offers/signup-offer-terms-and-conditions.pdf", target="_blank", rel="noopener noreferrer")
+                | #[sup (*)] Điều khoản và điều kiện áp dụng
+                .arrow
+              .to-content
+                | Điều kiện mở thẻ tín dụng HSBC
+                .arrow
+              a(href="https://card.apply.hsbc.com.vn/oct_promo/files/online_application_guide_vn_2209.pdf", target="_blank", rel="noopener noreferrer")
+                | Cách thức mở thẻ trực tuyến
+                .arrow
+              a(href="https://www.hsbc.com.vn/credit-cards/products/cashback/", target="_blank", rel="noopener noreferrer")
+                | Đầy đủ thông tin về Thẻ HSBC Cash 
+                span(style="display: inline-block; font-size: 1em;") Back
+                  .arrow
+      
+      if !mgm
+        #card-livefree.white-box
+          .only-mobile
+            .title Phù hợp cho Gen Z
+            h3.description Thẻ Tín Dụng HSBC Visa Chuẩn LiveFree
+            .img-container
+              .card-img.card-livefree
+              a(href!=rocket.host + rocket.offer_vn + "?PdC=CVC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Mở Thẻ Ngay
+          .card-img.card-livefree.only-desktop
+          .mid-right-container
+            .title.only-desktop Phù hợp cho Gen Z
+            h3.description.only-desktop Thẻ Tín Dụng HSBC Visa Chuẩn LiveFree
+            .inner-container
+              .middle-col
+                .small-title Tính năng nổi bật
+                ul.list
+                  li.list-item Trả góp 0% lãi suất, 0% phí chuyển đổi tại các đối tác của HSBC
+                  li.list-item Trả góp 0% lãi suất, phí chuyển đổi chỉ từ 1,49% cho chi tiêu từ 2 triệu VND tại bất cứ thương hiệu bạn chọn khác
+                  li.list-item Miễn lãi đến 55 ngày
+                  li.list-item Hạn mức đến 60 triệu VND
+                  li.list-item Phí phát hành (năm đầu): 350.000 VND
+                  li.list-item Phí thường niên (từ năm thứ 2): 350.000 VND
+                a.only-desktop(href!=rocket.host + rocket.offer_vn + "?PdC=CVC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                  .button Mở Thẻ Ngay
+              .right-col
+                .title Ưu đãi
+                .list-item #[strong Miễn phí] phát hành thẻ và phí thường niên #[strong 350.000 VND] khi thỏa điều kiện chi tiêu#[sup (*)]
+                a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/classic/tc-classic-vn-10jul2023.pdf", target="_blank", rel="noopener noreferrer")
+                  | #[sup (*)] Điều khoản và điều kiện áp dụng
+                  .arrow
+                .to-content
+                  | Điều kiện mở thẻ tín dụng HSBC
+                  .arrow
+                a(href="https://card.apply.hsbc.com.vn/oct_promo/files/online_application_guide_vn_2209.pdf", target="_blank", rel="noopener noreferrer")
+                  | Cách thức mở thẻ trực tuyến
+                  .arrow
+                a(href="https://www.hsbc.com.vn/credit-cards/products/classic-visa/", target="_blank", rel="noopener noreferrer")
+                  | Đầy đủ thông tin về Thẻ HSBC 
+                  span(style="display: inline-block; font-size: 1em;") LiveFree
+                    .arrow
+      
+      
+
+      #card-travel.white-box
+        .only-mobile
+          .title Phù hợp cho người yêu thích du lịch
+          h3.description Thẻ Tín Dụng HSBC Mastercard TravelOne
+          .img-container
+            .card-img.card-travel
+            a(href!=rocket.host + rocket.offer_vn + "?PdC=MJY" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+              .button Mở Thẻ Ngay
+        .card-img.card-travel.only-desktop
+        .mid-right-container
+          .title.only-desktop Phù hợp cho người yêu thích du lịch
+          h3.description.only-desktop Thẻ Tín Dụng HSBC Mastercard TravelOne
+          .inner-container
+            .middle-col
+              .small-title Tính năng nổi bật
+              ul.list
+                li.list-item Tích lũy 3x điểm thưởng cho các Giao Dịch Quốc Tế, 2x cho Giao Dịch Du Lịch Nội Địa, 1x cho mọi giao dịch khác
+                li.list-item Quy đổi điểm thưởng tức thì sang dặm bay và điểm khách sạn
+                li.list-item Giảm 12% không giới hạn tại Agoda
+                li.list-item Tặng 4 lần/năm Be Car ra sân bay
+                li.list-item Tặng 4 lần/năm phòng chờ sân bay toàn thế giới
+                li.list-item Chỉ 1,99% phí quản lý giao dịch nước ngoài
+                li.list-item Bảo hiểm du lịch đến 11,5 tỷ VND
+                li.list-item Hạn mức đến 1 tỷ VND
+                li.list-item Phí phát hành (năm đầu): 1.500.000 VND
+                li.list-item Phí thường niên (từ năm thứ 2): 1.500.000 VND
+              a.only-desktop(href!=rocket.host + rocket.offer_vn + "?PdC=MJY" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Mở Thẻ Ngay
+            .right-col
+              .title Ưu đãi mở thẻ
+              .list-item.no-bottom-space
+                | #[strong Miễn phí] phát hành #[strong 1.500.000 VND] cho thẻ chính; và,
+              .list-item.no-bottom-space
+                | #[strong Hoàn đến 2.000.000 VND] khi thỏa điều kiện chi tiêu#[sup (*)]; và,
+              .list-item
+                | #[strong Hoàn thêm 200.000 VND] khi tải và bật tính năng nhận Thông Báo trên Ứng Dụng HSBC Việt Nam
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/vi/credit-cards/tcs-welcome-offer-for-applying-hsbc-travelone-credit-card-vn.pdf", target="_blank", rel="noopener noreferrer")
+                | #[sup (*)] Điều khoản và điều kiện áp dụng
+                .arrow
+              .to-content
+                | Điều kiện mở thẻ tín dụng HSBC
+                .arrow
+              a(href="https://card.apply.hsbc.com.vn/oct_promo/files/online_application_guide_vn_2209.pdf", target="_blank", rel="noopener noreferrer")
+                | Cách thức mở thẻ trực tuyến
+                .arrow
+              a(href="https://www.hsbc.com.vn/credit-cards/products/travelone/", target="_blank", rel="noopener noreferrer")
+                | Đầy đủ thông tin về Thẻ HSBC 
+                span(style="display: inline-block; font-size: 1em;")
+                  | TravelOne
+                  .arrow
+  
+  #content.content
+    h2.section-title Điều kiện mở Thẻ Tín Dụng HSBC&nbsp;
+      i.fa.close &#xf107;
+      i.fa.open &#xf106;
+    .container
+      h3.title Điều kiện chung
+      ul.list
+        li.list-item Cá nhân từ 21 tuổi trở lên.
+        li.list-item Đang làm việc và cư trú tại: Hà Nội, TP. Hồ Chí Minh, Đồng Nai, Bình Dương, Long An, Đà Nẵng, Huế, Hội An, Bà Rịa - Vũng Tàu, Tây Ninh, Bắc Ninh, Vĩnh Phúc, Hưng Yên, Hải Dương, Hải Phòng.
+        li.list-item Người nước ngoài hiện đang cư trú tại Việt Nam được phép cư trú ở Việt Nam ít nhất 12 tháng LIÊN TỤC tính tại thời điểm nộp hồ sơ mở thẻ.
+      .title Thu nhập tối thiểu hàng tháng chuyển khoản từ tài khoản công ty
+      .small-title Thẻ Tín Dụng HSBC Live#[sup +]:
+      ul.list.more-left-padding
+        li.list-item Từ 9 triệu VND đối với khách hàng Việt Nam
+        li.list-item Từ 36 triệu VND đối với khách hàng nước ngoài
+      .small-title Thẻ Tín Dụng HSBC Visa Bạch Kim Cash Back:
+      ul.list.more-left-padding
+        li.list-item Từ 9 triệu VND đối với khách hàng Việt Nam
+        li.list-item Từ 15 triệu VND đối với khách hàng nước ngoài
+      if !mgm
+        .small-title Thẻ Tín Dụng HSBC Visa Chuẩn LiveFree:
+        ul.list.more-left-padding
+          li.list-item Từ 8 triệu VND đối với khách hàng Việt Nam
+          li.list-item Từ 15 triệu VND đối với khách hàng nước ngoài
+      .small-title Thẻ Tín Dụng HSBC Mastercard TravelOne:
+      ul.list.more-left-padding
+        li.list-item Từ 15 triệu VND đối với khách hàng Việt Nam
+        li.list-item Từ 36 triệu VND đối với khách hàng nước ngoài
+  
+  .content
+    h2.section-title Tận hưởng ưu đãi khác khi sử dụng thẻ tín dụng HSBC
+    ul.list
+      li.list-item
+        | Giảm đến 40% ẩm thực, giải trí, mua sắm, du lịch, làm đẹp.
+        br
+        |  Xem 
+        a(href="https://card.apply.hsbc.com.vn/uu-dai-moi-ngay/vn", target="_blank", rel="noopener noreferrer")
+          | Ưu đãi mỗi 
+          span(style="display: inline-block; font-size: 1em;")
+            | ngày
+            .arrow
+      li.list-item
+        | Trả góp 0% lãi suất, 0% phí chuyển đổi tại đối tác HSBC.
+        br
+        |  Xem 
+        a(href="https://card.apply.hsbc.com.vn/tra-gop/dien-may-cong-nghe/vn", target="_blank", rel="noopener noreferrer")
+          | Chương trình trả góp 0% lãi 
+          span(style="display: inline-block; font-size: 1em;")
+            | suất
+            .arrow
+      li.list-item
+        | Trả góp với phí chuyển đổi chỉ từ 1,49% tại thương hiệu bất kỳ do bạn tự chọn.
+        br
+        |  Xem 
+        a(href="https://card.apply.hsbc.com.vn/tra-gop/co-phi-chuyen-doi/vn", target="_blank", rel="noopener noreferrer")
+          | Chương trình trả góp linh 
+          span(style="display: inline-block; font-size: 1em;")
+            | động
+            .arrow
+      li.list-item
+        | Ưu đãi đến 5 triệu VND khi giới thiệu bạn bè mở thẻ HSBC.
+        br
+        |  Xem 
+        a(href="https://card.apply.hsbc.com.vn/gioi-thieu-ban-mo-the/vn", target="_blank", rel="noopener noreferrer")
+          | Ưu đãi giới 
+          span(style="display: inline-block; font-size: 1em;")
+            | thiệu
+            .arrow
+  
+  .footer
+    .left-col
+      a(href="https://www.hsbc.com.vn/hyperlink-policy/", target="_blank", rel="noopener noreferrer") Chính sách siêu liên kết
+      a(href="https://www.hsbc.com.vn/privacy-and-security/", target="_blank", rel="noopener noreferrer") Quyền riêng tư và bảo mật
+      a(href="https://www.hsbc.com.vn/terms-of-use/", target="_blank", rel="noopener noreferrer") Điều khoản sử dụng
+      a(href="https://www.fatca.hsbc.com/vi-vn/rbwm/vietnam", target="_blank", rel="noopener noreferrer") FATCA
+    .right-col
+      .text © Bản quyền 2024 thuộc về Ngân hàng TNHH Một thành viên HSBC (Việt Nam).
+      .text Tất cả các quyền được bảo hộ.
+      .text Trang này được thiết kế riêng cho việc sử dụng dịch vụ tại Việt Nam.
+      .text
+        a(href="https://www.hsbc.com.vn/legal/cross-border-banking", target="_blank", rel="noopener noreferrer")
+          | Thông báo về giới hạn phạm vi cung cấp dịch vụ qua biên giới 

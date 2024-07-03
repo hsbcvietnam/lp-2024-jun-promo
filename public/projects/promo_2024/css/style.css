@@ -1,0 +1,26 @@
+.message-wrapper {
+  margin-top: 8vh;
+  width: 80vw; }
+  @media (max-width: 480px) {
+    .message-wrapper {
+      width: 90vw;
+      margin-top: 4vh; } }
+
+.message-box {
+  border: 1px solid #db0011;
+  margin: 70px 0 0 0;
+  padding: 50px;
+  position: relative; }
+  .message-box__corner {
+    position: absolute;
+    width: 70px;
+    height: auto; }
+  .message-box__corner--top {
+    top: 0;
+    left: 0; }
+  .message-box__corner--bottom {
+    bottom: 0;
+    right: 0; }
+  .message-box__text {
+    font-size: 18px;
+    line-height: 1.5; }

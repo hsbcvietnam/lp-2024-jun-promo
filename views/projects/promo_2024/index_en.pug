@@ -1,0 +1,383 @@
+extends layout
+
+block variables
+  -
+    var title = "Get an HSBC Credit Card to receive gifts worth up to VND 3.7 million";
+    //- MAKE SURE THE CORRECT LANGUAGE IS SELECTED, it either english or vietnamese
+    var language = "english";
+    campaignId = campaignId ? '&CampaignID=' + campaignId : "";
+    leap = leap ? '&leap=' + leap: "&leap=true";
+
+block blockMeta
+  meta(name='description' content='Open an HSBC credit card now to receive gifts worth up to VND 3.7 million, automatic cashback up to 8%/ month on all spending, 0% interest instalment plan with no conversion fee, and hundreds of discounts all year round!')
+  link(rel='icon', type='image/png', href!= imageFolder + '/favicon-32x32.png', sizes='32x32')
+  meta(property='og:title' content='Get an HSBC Credit Card to receive gifts worth up to VND 3.7 million')
+  meta(property='og:type' content='website')
+  meta(property='og:url' content='https://card.apply.hsbc.com.vn/promotion-apply-credit-card-HSBC/en')
+  meta(property='og:image', content!= 'https://card.apply.hsbc.com.vn' + imageFolder + '/thumbnail.jpg')
+
+block blockCSS
+  link(rel="stylesheet", href!= cssFolder + "/chs_custom.css")
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  link(rel='canonical', href='https://card.apply.hsbc.com.vn/promotion-apply-credit-card-hsbc/en')
+
+block blockJS
+  script(src!= jsFolder + '/chs_custom.js')
+
+  script(type='text/javascript').
+    if (document.URL.indexOf("pid=") != -1 || document.URL.indexOf("cid=") != -1) {
+      jQuery("a[href*=' /1/2/vnm2/lead/card/the-tin-dung-hsbc-credit-card']")
+        .map(function() {
+          $(this).attr("href", $(this).attr("href").split("?")[0] + "?" + document.URL.match(/[^&?]*?=[^&?]*/)[0])
+        });
+    };
+
+block blockTealiumHead
+  //- Start - Tealium iQ (sync.js)
+  script(src='//tags.tiqcdn.com/utag/hsbc/vn-rbwm/prod/utag.sync.js')
+  //- End - Tealium iQ (sync.js)
+
+block blockTealium
+  script.
+    // Universal Data Object
+    //- PLEASE REFER THE example.pdf FOR UDO VALUE.
+    window.utag_data = {
+      "page_url"            : location.protocol + '//' + document.domain + location.pathname + location.hash,
+      "page_name"           : location.pathname.replace(/\/(en|vn)/g, "").replace(/(https|http):\/\//, "").replace(/^/, "pws").replace(/\//g, ":").replace(/:$/, "").replace(/-/g, " "),
+      "page_language"       : pageOption.language == "vietnamese" ? "vn_vi" : "en",
+      "page_type"           : "campaign",
+      "page_security_level" : "0",
+      "page_business_line"  : "rbwm",
+      "page_customer_group" : "general",
+      "site_section"        : "pws",
+      "product_category"    : "credit cards",
+      "product_subcategory" : "primary cards",
+      "product_id": "visa-classic, visa-platinum, visa-cash-back"
+    };
+    window.utag_data.page_category = window.utag_data.page_name.split(":")[1];
+    window.utag_data.page_subcategory = window.utag_data.page_name.split(":")[2];
+    //- Loading Tealium
+    (function(a,b,c,d,e){
+      // Change the 'production.domain.com' into the acutal application production domain.
+      b=document;e=b.domain==('card.apply.hsbc.com.vn')?'prod':'qa';
+      a='//tags.tiqcdn.com/utag/hsbc/vn-rbwm/' + e + '/utag.js';
+      c='script';d=b.createElement(c);d.src=a;
+      d.type='text/java'+c;d.async=true;
+      a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a)
+    })();
+
+block content
+  .header
+    .logo
+    .lang
+      if mgm
+        a(href="/uu-dai-mo-the-qua-ban-be/vn", rel="noopener noreferrer") VN
+      else
+        a(href="/uu-dai-mo-the-tin-dung-HSBC/vn", rel="noopener noreferrer") VN
+    #header-menu.header-menu
+      .header-item Select Card&nbsp;&nbsp;
+        i#close.fa &#xf107;
+        i#open.fa &#xf106;
+      .header-item(title="card-liveplus") Live #[sup +] Card
+      .header-item(title="card-cashback") Cashback Platinum Card
+      if !mgm
+        .header-item(title="card-livefree") LiveFree Classic Card
+      .header-item(title="card-travel") TravelOne Card 
+
+  if mgm
+    .message-wrapper
+      .message-box
+        img.message-box__corner.message-box__corner--top(src!= imageFolder + '/chs_triangle_top.png')
+        img.message-box__corner.message-box__corner--bottom(src!= imageFolder + '/chs_triangle_bottom.png')
+        p.message-box__text
+          | Hello,
+          br
+          | You have been referred by your friend to apply for an HSBC Credit Card.
+          br
+          | The following promotions and benefits are in store for you when you successfully get an HSBC Credit Card.  Select the Card that best suits your needs.  Apply for one now!
+  else
+    .kv-area
+      .text-box
+        h1.title It's time to Live It Up!
+        .text
+          strong HSBC Live#[sup +] Credit Card
+          br
+          | Earn up to 8% cashback on your online and in-store spendings for dining, shopping, and entertainment#[sup (*)]
+
+  .content
+    h2.section-title Choose the HSBC Credit Card that suits you best
+    .gray-container
+      #card-liveplus.white-box
+        .only-mobile
+          .title Best for cashback on lifestyle shopping
+          h3.description HSBC Visa Signature Live#[sup +] Credit Card
+          .img-container
+            .card-img.card-liveplus
+            a(href!=rocket.host + rocket.offer_en + "?PdC=VPC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+              .button Apply Now
+        .card-img.card-liveplus.only-desktop
+        .mid-right-container
+          .title.only-desktop Best for cashback on lifestyle shopping
+          h3.description.only-desktop HSBC Live#[sup +] Credit Card
+          .inner-container
+            .middle-col
+              .small-title Outstanding features
+              ul.list
+                li.list-item 15% off and more at over 200 restaurants across Asian in Live#[sup +] Dining Programe
+                li.list-item Up to 8% cashback on dining and shopping spends (capped VND 200,000/ month)
+                li.list-item Unlimited 1% cash back on entertainment spends
+                li.list-item Unlimited 0.3% cashback on all other spends
+                li.list-item 0% interest instalment plan
+                li.list-item Up to 55 days interest-free
+                li.list-item Credit limit up to VND 1 billion
+                li.list-item Issuance fee (for 1#[sup st] year): VND 800,000
+                li.list-item Annual fee (for 2#[sup nd] years onwards): VND 800,000
+              a.only-desktop(href!=rocket.host + rocket.offer_en + "?PdC=VPC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Apply Now
+            .right-col
+              .title Sign-up offers
+              .list-item.no-bottom-space
+                | #[strong Free card issuance fee] worth #[strong VND 800,000] for Primary card; and
+              .list-item.no-bottom-space
+                | #[strong Cashback up to VND 2,000,000] upon spending conditions#[sup (*)]
+              .list-item
+                | #[strong Additional cashback VND 200,000] when download and enable the notification feature on HSBC Vietnam Application
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/en/credit-cards/platinum/offers/signup-offer-terms-and-conditions.pdf?pid=VNP:CCAcq:HpgPd:2008:Lnk:en", target="_blank", rel="noopener noreferrer")
+                | #[sup (*)] Terms & conditions apply
+                .arrow
+              .to-content
+                | Eligibility
+                .arrow
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/online-application-guide-en.pdf?pid=VNP:CCAcq:HpgPd:2008:Lnk:en", target="_blank", rel="noopener noreferrer")
+                | How to apply for a card online
+                .arrow
+              a(href="https://www.hsbc.com.vn/en-vn/credit-cards/products/liveplus/", target="_blank", rel="noopener noreferrer")
+                | Full information about HSBC Live#[sup +] Credit 
+                span(style="display: inline-block; font-size: 1em;")
+                  | Card
+                  .arrow 
+
+      #card-cashback.white-box
+        .only-mobile
+          .title Best for cashback on supermarkets and grocery stores spending
+          h3.description HSBC Visa Platinum Cash Back Credit Card
+          .img-container
+            .card-img.card-cashback
+            a(href!=rocket.host + rocket.offer_en + "?PdC=CVG" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+              .button Apply Now
+        .card-img.card-cashback.only-desktop
+        .mid-right-container
+          .title.only-desktop Best for cashback on supermarkets and grocery stores spending
+          h3.description.only-desktop HSBC Visa Platinum Cash Back Credit Card
+          .inner-container
+            .middle-col
+              .small-title Outstanding features
+              ul.list
+                li.list-item Up to 8% cashback on daily spends at supermarkets and grocery stores (capped VND 200,000/ month)
+                li.list-item Unlimited 1% cashback on education & insurance spends
+                li.list-item Unlimited 0.3% cashback on all other spends
+                li.list-item 0% interest instalment plan
+                li.list-item Up to 55 days interest-free
+                li.list-item Credit limit up to VND 1 billion
+                li.list-item Issuance fee (for 1#[sup st] year): VND 800,000
+                li.list-item Annual fee (for 2#[sup nd] years onwards): VND 800,000
+              a.only-desktop(href!=rocket.host + rocket.offer_en + "?PdC=CVG" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Apply Now
+            .right-col
+              .title Sign-up offers
+              .list-item.no-bottom-space
+                | #[strong Free card issuance fee] worth #[strong VND 800,000] for primary card; and
+              .list-item.no-bottom-space
+                | #[strong Cashback up to VND 1,000,000] upon spending conditions#[sup (*)]
+              .list-item
+                | #[strong Additional cashback VND 200,000] when download and enable the notification feature on HSBC Vietnam Application
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/en/credit-cards/platinum/offers/signup-offer-terms-and-conditions.pdf", target="_blank", rel="noopener noreferrer")
+                | #[sup (*)] Terms & conditions apply
+                .arrow
+              .to-content
+                | Eligibility
+                .arrow
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/online-application-guide-en.pdf", target="_blank", rel="noopener noreferrer")
+                | How to apply for a card online
+                .arrow
+              a(href="https://www.hsbc.com.vn/en-vn/credit-cards/products/cashback/", target="_blank", rel="noopener noreferrer")
+                | Full information about HSBC Cashback Credit 
+                span(style="display: inline-block; font-size: 1em;")
+                  | Card
+                  .arrow 
+
+      if !mgm
+        #card-livefree.white-box
+          .only-mobile
+            .title Best for Gen Z
+            h3.description HSBC Visa LiveFree Credit Card
+            .img-container
+              .card-img.card-livefree
+              a(href!=rocket.host + rocket.offer_en + "?PdC=CVC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Apply Now
+          .card-img.card-livefree.only-desktop
+          .mid-right-container
+            .title.only-desktop Best for Gen Z
+            h3.description.only-desktop HSBC Visa LiveFree Credit Card
+            .inner-container
+              .middle-col
+                .small-title Outstanding features
+                ul.list
+                  li.list-item 0% interest instalment plan without conversion fee at hundreds of HSBC's partners
+                  li.list-item 0% interest instalment plan with low conversion fee only from 1.49% applied when spending from VND 2 million at merchants of your own choice
+                  li.list-item Up to 55 days interest-free
+                  li.list-item Credit limit up to VND 60 million
+                  li.list-item Issuance fee (for 1#[sup st] year): VND 350,000
+                  li.list-item Annual fee (for 2#[sup nd] years onwards): VND 350,000
+                a.only-desktop(href!=rocket.host + rocket.offer_en + "?PdC=CVC" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                  .button Apply Now
+              .right-col
+                .title Offers
+                .list-item #[strong Free card issuance and annual fee] worth #[strong VND 350,000] upon spending conditions
+                a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/classic/tc-classic-en-10jul2023.pdf", target="_blank", rel="noopener noreferrer")
+                  | #[sup (*)] Terms & conditions apply
+                  .arrow
+                .to-content
+                  | Eligibility
+                  .arrow
+                a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/credit-cards/online-application-guide-en.pdf", target="_blank", rel="noopener noreferrer")
+                  | How to apply for a card online
+                  .arrow
+                a(href="https://www.hsbc.com.vn/en-vn/credit-cards/products/classic-visa/", target="_blank", rel="noopener noreferrer")
+                  | Full information about HSBC LiveFree Credit 
+                  span(style="display: inline-block; font-size: 1em;")
+                    | Card
+                    .arrow
+
+      #card-travel.white-box
+        .only-mobile
+          .title Best for travellers
+          h3.description HSBC Mastercard TravelOne Credit Card
+          .img-container
+            .card-img.card-travel
+            a(href!=rocket.host + rocket.offer_en + "?PdC=MJY" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+              .button Apply Now
+        .card-img.card-travel.only-desktop
+        .mid-right-container
+          .title.only-desktop Best for travellers
+          h3.description.only-desktop HSBC Mastercard TravelOne Credit Card
+          .inner-container
+            .middle-col
+              .small-title Outstanding features
+              ul.list
+                li.list-item Earn 3x reward points for overseas spends, 2x for domestic travel spends, and unlimited 1x for all other spends
+                li.list-item Redeem reward points instantly to miles and hotel points
+                li.list-item 12% discount for Agoda
+                li.list-item 4 airport rides a year from Be Car
+                li.list-item 4 airport lounge visits a year
+                li.list-item Overseas administration fee only at 1.99%
+                li.list-item Travel insurance up to VND 11.5 billion
+                li.list-item Credit limit up to VND 1 billion
+                li.list-item Issuance fee (for 1#[sup st] year): VND 1,500,000
+                li.list-item Annual fee (for 2#[sup nd] years onwards): VND 1,500,000
+              a.only-desktop(href!=rocket.host + rocket.offer_en + "?PdC=MJY" + campaignId + leap, target="_blank", rel="noopener noreferrer")
+                .button Apply Now
+            .right-col
+              .title Sign-up offers
+              .list-item.no-bottom-space
+                | #[strong Free card issuance fee] worth #[strong VND 1,500,000] for primary card; and
+              .list-item.no-bottom-space
+                | #[strong Cashback up to VND 2,000,000] upon spending conditions#[sup (*)]
+              .list-item
+                | #[strong Additional cashback VND 200,000] when download and enable the notification feature on HSBC Vietnam Application
+              a(href="https://www.hsbc.com.vn/content/dam/hsbc/hbvn/documents/vi/credit-cards/tcs-welcome-offer-for-applying-hsbc-travelone-credit-card-vn.pdf", target="_blank", rel="noopener noreferrer")
+                | #[sup (*)] Terms & conditions apply
+                .arrow
+              .to-content
+                | Eligibility
+                .arrow
+              a(href="https://card.apply.hsbc.com.vn/oct_promo/files/online_application_guide_en_2209.pdf", target="_blank", rel="noopener noreferrer")
+                | How to apply for a card online
+                .arrow
+              a(href="https://www.hsbc.com.vn/en-vn/credit-cards/products/travelone/", target="_blank", rel="noopener noreferrer")
+                | Full information about HSBC TravelOne Credit 
+                span(style="display: inline-block; font-size: 1em;")
+                  | Card
+                  .arrow
+
+  #content.content
+    h2.section-title Eligibility&nbsp;
+      i.fa.close &#xf107;
+      i.fa.open &#xf106;
+    .container
+      h3.title General requirement
+      ul.list
+        li.list-item All applicants must be at least 21 years of age.
+        li.list-item Residing and working in cities, provinces: Hanoi, Ho Chi Minh City, Dong Nai, Binh Duong, Long An, Da Nang, Hue, Hoi An, Ba Ria - Vung Tau, Tay Ninh, Bac Ninh, Vinh Phuc, Hung Yen, Hai Duong, Hai Phong.
+        li.list-item Foreigners staying in Vietnam have residence permission in Vietnam for at least 12 CONSECUTIVE months at the time of application.
+      .title Minimum monthly income transferred from business account
+      .small-title HSBC Visa Signature Live#[sup +] Credit Card:
+      ul.list.more-left-padding
+        li.list-item From VND 9 million for salaried earners who are Vietnamese
+        li.list-item From VND 36 million for foreigners
+      .small-title HSBC Visa Platinum Cashback Credit Card:
+      ul.list.more-left-padding
+        li.list-item From VND 9 million for salaried earners who are Vietnamese
+        li.list-item From VND 15 million for foreigners
+      if !mgm
+        .small-title HSBC Visa LiveFree Classic Credit Card:
+        ul.list.more-left-padding
+          li.list-item From VND 8 million for salaried earners who are Vietnamese
+          li.list-item From VND 15 million for foreigners
+      .small-title HSBC Mastercard TravelOne Credit Card:
+      ul.list.more-left-padding
+        li.list-item From VND 15 million for salaried earners who are Vietnamese
+        li.list-item From VND 36 million for foreigners
+  
+  .content
+    h2.section-title Enjoy other HSBC Credit Card promotions
+    ul.list
+      li.list-item
+        | Up to 40% off on dining, entertainment, shopping, traveling and beauty.
+        br
+        |  See details of 
+        a(href="https://card.apply.hsbc.com.vn/daily-offers/en", target="_blank", rel="noopener noreferrer")
+          | Daily 
+          span(style="display: inline-block; font-size: 1em;")
+            | offers
+            .arrow
+      li.list-item
+        | 0% interest instalment plan without conversion fee at hundreds of HSBC merchants.
+        br
+        |  See 
+        a(href="https://card.apply.hsbc.com.vn/installment/electronics-gadgets/en", target="_blank", rel="noopener noreferrer")
+          | our participating 
+          span(style="display: inline-block; font-size: 1em;")
+            | merchants
+            .arrow
+      li.list-item
+        | 0% interest instalment plan with low conversion fee only from 1.49% at merchants of your own choice.
+        br
+        |  See our 
+        a(href="https://card.apply.hsbc.com.vn/installment/flexible-fee/en", target="_blank", rel="noopener noreferrer")
+          | Flexible Instalment 
+          span(style="display: inline-block; font-size: 1em;")
+            | Plan
+            .arrow
+      li.list-item
+          | Rewards up to VND 5 million for successful credit card referrals.
+          br
+          |   See details of 
+          a(href="https://card.apply.hsbc.com.vn/member-get-member-offers/en", target="_blank", rel="noopener noreferrer")
+            | Member-get-Member 
+            span(style="display: inline-block; font-size: 1em;")
+              | offers
+              .arrow
+
+  .footer
+    .left-col
+      a(href="https://www.hsbc.com.vn/en-vn/hyperlink-policy/", target="_blank", rel="noopener noreferrer") Hyperlink policy
+      a(href="https://www.hsbc.com.vn/en-vn/privacy-and-security/", target="_blank", rel="noopener noreferrer") Privacy and security
+      a(href="https://www.hsbc.com.vn/en-vn/terms-of-use/", target="_blank", rel="noopener noreferrer") Terms of use
+      a(href="https://www.fatca.hsbc.com/en/rbwm/vietnam", target="_blank", rel="noopener noreferrer") FATCA
+    .right-col
+      .text © Copyright. HSBC Bank (Vietnam) Ltd. 2024.
+      .text All rights reserved.
+      .text This website is designed for use in Vietnam.
+      .text
+        a(href="https://www.hsbc.com.vn/en-vn/legal/cross-border-banking", target="_blank", rel="noopener noreferrer") Cross-border disclosure
